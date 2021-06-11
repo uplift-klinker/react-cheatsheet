@@ -1,0 +1,19 @@
+{
+  "name": "@uplift/react-cheatsheet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uplift-klinker/react-cheatsheet.git"
+  },
+  "author": "Bryce Klinker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uplift-klinker/react-cheatsheet/issues"
+  },
+  "homepage": "https://github.com/uplift-klinker/react-cheatsheet#readme"
+}

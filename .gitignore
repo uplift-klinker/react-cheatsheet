@@ -1,2 +1,11 @@
 # Jet Brains
 .idea/
+
+# Node
+node_modules/
+
+# Build Output
+dist/
+
+# Coverage
+.coverage/

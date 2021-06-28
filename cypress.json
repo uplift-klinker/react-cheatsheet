@@ -1,0 +1,11 @@
+{
+  "fileServerFolder": ".",
+  "fixturesFolder": "./acceptance-tests/fixtures",
+  "integrationFolder": "./acceptance-tests/tests",
+  "pluginsFile": "./acceptance-tests/plugins/index",
+  "supportFile": "./acceptance-tests/support/index.ts",
+  "video": true,
+  "videosFolder": "./acceptance-tests/videos",
+  "screenshotsFolder": "./acceptance-tests/screenshots",
+  "baseUrl": "http://localhost:8080"
+}

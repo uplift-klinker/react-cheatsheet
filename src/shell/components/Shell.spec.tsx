@@ -1,14 +1,17 @@
-import {ModelFactory, TestingRenderer, TestingStoreFactory} from '../../../testing';
+import {TestingRenderer} from '../../../testing';
 import {Shell} from './Shell';
 import {screen} from '@testing-library/dom';
 
 describe('Shell', () => {
-    test('when rendered then shows current settings', () => {
-        const settings = ModelFactory.createSettingsModel();
-        const store = TestingStoreFactory.fromSettings(settings);
+    test('when rendered then shows welcome', () => {
+        TestingRenderer.withProviders(<Shell />);
 
-        TestingRenderer.withProviders(<Shell/>, {store});
+        expect(screen.getByLabelText('welcome')).toBeInTheDocument();
+    })
 
-        expect(screen.getByRole('main')).toHaveTextContent(settings.api.url);
-    });
+    test('when rendered at todos route then shows todo page', () => {
+        TestingRenderer.withProviders(<Shell />, {currentRoute: '/todos'});
+
+        expect(screen.getByLabelText('empty todos')).toBeInTheDocument();
+    })
 });

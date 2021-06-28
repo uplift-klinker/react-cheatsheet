@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {SettingsLoader} from 'src/settings/settings-loader';
 import {SettingsModel} from 'src/settings/settings.model';
 import {Shell} from 'src/shell/components/Shell';
-import {createTheme} from 'src/shell/create-theme';
+import {createTheme} from 'src/shared/theming/create-theme';
 import {configureRootStore} from 'src/store/configure-root-store';
 
 function renderApp(settings: SettingsModel) {

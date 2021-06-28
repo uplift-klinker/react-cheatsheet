@@ -1,7 +1,8 @@
 import {all} from 'redux-saga/effects';
+import {todoSaga} from '../todos/state/todos-saga';
 
 export function* rootSaga() {
-    return all([
-
+    yield all([
+        todoSaga()
     ])
 }

@@ -25,7 +25,14 @@ module.exports = function (env) {
             rules: [
                 {
                     test: /\.tsx?$/,
-                    use: 'ts-loader',
+                    use: [
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                configFile: path.resolve(__dirname, 'tsconfig.app.json')
+                            }
+                        }
+                    ],
                     exclude: /node_modules/
                 },
                 {

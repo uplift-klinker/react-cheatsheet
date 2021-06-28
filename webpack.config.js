@@ -1,15 +1,17 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin');
+const {TsconfigPathsPlugin} = require('tsconfig-paths-webpack-plugin');
 
-module.exports = function (env) {
-    const isProduction = env.production;
+module.exports = function (env, argv) {
+    const isProduction = argv.mode === 'production';
+    const entry = {main: path.resolve(__dirname, 'src', 'index.tsx')};
+    if (!isProduction) {
+        entry.mockServiceWorker = isProduction ? undefined : path.resolve(__dirname, 'src', 'mockServiceWorker.js');
+    }
     return {
-        devtool: isProduction ? undefined : 'eval',
-        entry: {
-            main: path.resolve(__dirname, 'src', 'index.tsx')
-        },
+        devtool: isProduction ? false : 'source-map',
+        entry: entry,
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: isProduction ? '[name].[contenthash].js' : '[name].js',
@@ -18,7 +20,9 @@ module.exports = function (env) {
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
             plugins: [
-                new TsconfigPathsWebpackPlugin({configFile: path.resolve(__dirname, 'tsconfig.app.json')})
+                new TsconfigPathsPlugin({
+                    configFile: path.resolve(__dirname, 'tsconfig.app.json')
+                })
             ]
         },
         module: {
@@ -54,6 +58,11 @@ module.exports = function (env) {
                     {from: path.resolve(__dirname, 'src', 'assets'), to: 'assets'}
                 ]
             })
-        ]
+        ],
+        devServer: {
+            port: 8080,
+            historyApiFallback: true,
+
+        }
     }
 }

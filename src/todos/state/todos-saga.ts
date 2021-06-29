@@ -15,6 +15,19 @@ function* loadTodos() {
     }
 }
 
+function* addTodo({payload}: ReturnType<typeof TodosActions.add.request>) {
+    try {
+        const apiUrl = yield select(selectSettingsApiUrl);
+        const restApi = RestApiFactory.create(apiUrl);
+        const result: TodoModel = yield call(restApi.post, '/todos', payload);
+        yield put(TodosActions.add.success(result));
+    } catch (error) {
+        yield put(TodosActions.add.failed(error));
+    }
+
+}
+
 export function* todoSaga() {
     yield takeEvery(TodosActions.load.request, loadTodos);
+    yield takeEvery(TodosActions.add.request, addTodo)
 }

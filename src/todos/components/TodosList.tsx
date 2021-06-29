@@ -1,31 +1,36 @@
 import {FunctionComponent} from 'react';
+import {Box, IconButton, List, ListItem, ListItemText} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import {TodoModel} from '../state/todo.model';
-import {List, ListItem, ListItemText} from '@material-ui/core';
 import {TodoItem} from './TodoItem';
 
 export interface TodosListProps {
     todos: Array<TodoModel>;
+    onAddTodoClick?: () => void;
 }
 
-export const TodosList: FunctionComponent<TodosListProps> = ({todos}) => {
-    if (todos.length === 0) {
-        return <EmptyTodoList />
-    }
-
-    const items = todos.map(todo=> <TodoItem key={todo.id} todo={todo} />);
+export const TodosList: FunctionComponent<TodosListProps> = ({todos, onAddTodoClick}) => {
+    const items = todos.map(todo => <TodoItem key={todo.id} todo={todo}/>);
     return (
-        <List>
-            {items}
-        </List>
-    )
-}
-
-const EmptyTodoList: FunctionComponent = () => {
-    return (
-        <List>
-            <ListItem aria-label={'empty todos'}>
-                <ListItemText>No Todos have been added</ListItemText>
-            </ListItem>
-        </List>
-    )
-}
+        <Box flex={1} display={'flex'} flexDirection={'column'}>
+            <Box flex={1} display={'flex'} flexDirection={'column'}>
+                <List>
+                    {
+                        items.length > 0
+                            ? null
+                            : <ListItem aria-label={'empty todos'}>
+                                <ListItemText>No Todos have been added</ListItemText>
+                            </ListItem>
+                    }
+                    {items}
+                </List>
+            </Box>
+            <Box display={'flex'} flexDirection={'row'}>
+                <Box flex={1} display={'flex'}/>
+                <IconButton aria-label={'add todo'} onClick={onAddTodoClick}>
+                    <AddIcon/>
+                </IconButton>
+            </Box>
+        </Box>
+    );
+};

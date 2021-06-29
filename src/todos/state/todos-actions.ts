@@ -9,7 +9,7 @@ export const TodosActions = {
     ),
 
     add: createAsyncActionSet('[Todos] Add',
-        (todo: TodoModel) => ({payload: todo}),
+        (todo: Partial<TodoModel>) => ({payload: todo}),
         (todo: TodoModel) => ({payload: todo}),
         (error: any) => ({payload: error})
     ),

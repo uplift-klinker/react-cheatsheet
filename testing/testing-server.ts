@@ -37,9 +37,24 @@ function setupGet<T>(url: string, result: T, options?: Partial<TestRequestOption
     )
 }
 
+function setupPost<T>(url: string, result: T, options?: Partial<TestRequestOptions>): void {
+    const requestOptions = {...DEFAULT_REQUEST_OPTIONS, ...options};
+    server.use(
+        rest.post(url, (req, res, ctx) => {
+            requestOptions.capture(req);
+            return res(
+                ctx.status(requestOptions.status),
+                ctx.delay(requestOptions.delay),
+                ctx.json(result)
+            )
+        })
+    )
+}
+
 export const TestingServer = {
     start,
     stop,
     reset,
-    setupGet
+    setupGet,
+    setupPost
 }

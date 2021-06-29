@@ -10,18 +10,23 @@ export const TodosPage: FunctionComponent = () => {
     const dispatch = useAppDispatch();
     const todos = useAllTodos();
     const [isAddingTodo, setIsAddingTodo] = useState(false);
+
     const handleAddTodoClick = useCallback(() => setIsAddingTodo(true), [setIsAddingTodo]);
     const handleCancelAddTodo = useCallback(() => setIsAddingTodo(false), [setIsAddingTodo]);
-    const handleSaveTodo = useCallback((todo: Partial<TodoModel>) => {
+    const handleDeleteTodo = useCallback((todo: TodoModel) => dispatch(TodosActions.delete.request(todo)), [dispatch]);
+    const handleUpdateTodo = useCallback((todo: TodoModel) => dispatch(TodosActions.update.request(todo)), [dispatch]);
+
+    const handleAddTodo = useCallback((todo: Partial<TodoModel>) => {
         dispatch(TodosActions.add.request(todo));
         setIsAddingTodo(false);
     }, [setIsAddingTodo, dispatch]);
+
     useEffect(() => { dispatch(TodosActions.load.request()); }, []);
 
     return (
         <>
-            <TodosList todos={todos} onAddTodoClick={handleAddTodoClick}/>
-            <AddTodoDialog open={isAddingTodo} onCancel={handleCancelAddTodo} onSave={handleSaveTodo} />
+            <TodosList todos={todos} onAddTodo={handleAddTodoClick} onDeleteTodo={handleDeleteTodo} onUpdateTodo={handleUpdateTodo}/>
+            <AddTodoDialog open={isAddingTodo} onCancel={handleCancelAddTodo} onSave={handleAddTodo} />
         </>
     );
 };

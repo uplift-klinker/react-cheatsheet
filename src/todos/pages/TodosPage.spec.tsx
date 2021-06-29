@@ -59,6 +59,27 @@ describe('TodosPage', () => {
         })));
     });
 
+    test('when todo deleted then requests to delete todo', async () => {
+        const todo = ModelFactory.createTodoModel();
+        const store = TestingStoreFactory.fromActions(TodosActions.load.success([todo]));
+        TestingRenderer.withProviders(<TodosPage/>, {store});
+
+        userEvent.click(await screen.findByRole('button', {name: 'delete todo'}));
+
+        await waitFor(() => expect(store.getActions()).toContainEqual(TodosActions.delete.request(todo)));
+    });
+
+    test('when todo updated then requests to update todo', async () => {
+        const todo = ModelFactory.createTodoModel();
+        const store = TestingStoreFactory.fromActions(TodosActions.load.success([todo]));
+        TestingRenderer.withProviders(<TodosPage/>, {store});
+
+        userEvent.click(await screen.findByRole('button', {name: 'edit todo'}));
+        userEvent.click(await screen.findByRole('button', {name: 'confirm edit todo'}));
+
+        await waitFor(() => expect(store.getActions()).toContainEqual(TodosActions.update.request(todo)));
+    })
+
     async function saveNewTodo(title: string) {
         userEvent.click(await screen.findByRole('button', {name: 'add todo'}));
         userEvent.type(await screen.findByLabelText('title'), title);

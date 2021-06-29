@@ -6,11 +6,13 @@ import {TodoItem} from './TodoItem';
 
 export interface TodosListProps {
     todos: Array<TodoModel>;
-    onAddTodoClick?: () => void;
+    onAddTodo?: () => void;
+    onDeleteTodo?: (todo: TodoModel) => void;
+    onUpdateTodo?: (todo: TodoModel) => void;
 }
 
-export const TodosList: FunctionComponent<TodosListProps> = ({todos, onAddTodoClick}) => {
-    const items = todos.map(todo => <TodoItem key={todo.id} todo={todo}/>);
+export const TodosList: FunctionComponent<TodosListProps> = ({todos, onAddTodo, onDeleteTodo, onUpdateTodo}) => {
+    const items = todos.map(todo => <TodoItem key={todo.id} todo={todo} onDelete={onDeleteTodo} onUpdate={onUpdateTodo}/>);
     return (
         <Box flex={1} display={'flex'} flexDirection={'column'}>
             <Box flex={1} display={'flex'} flexDirection={'column'}>
@@ -27,7 +29,7 @@ export const TodosList: FunctionComponent<TodosListProps> = ({todos, onAddTodoCl
             </Box>
             <Box display={'flex'} flexDirection={'row'}>
                 <Box flex={1} display={'flex'}/>
-                <IconButton aria-label={'add todo'} onClick={onAddTodoClick}>
+                <IconButton aria-label={'add todo'} onClick={onAddTodo}>
                     <AddIcon/>
                 </IconButton>
             </Box>

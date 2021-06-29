@@ -9,10 +9,6 @@ function fromActions<State>(reducer: Reducer<State>, ...actions: Array<Action>):
     return actions.reduce(reducer, initialState);
 }
 
-function rootFromActions(...actions: Array<Action>): ApplicationState {
-    return rootFromSettings(DEFAULT_SETTINGS, ...actions);
-}
-
 function rootFromSettings(settings: SettingsModel = DEFAULT_SETTINGS, ...actions: Array<Action>): ApplicationState {
     const reducer = createRootReducer(settings);
     return fromActions(reducer, ...actions);
@@ -20,6 +16,5 @@ function rootFromSettings(settings: SettingsModel = DEFAULT_SETTINGS, ...actions
 
 export const StateGenerator = {
     fromActions,
-    rootFromActions,
     rootFromSettings
 };

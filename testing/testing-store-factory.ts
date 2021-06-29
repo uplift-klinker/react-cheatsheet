@@ -8,13 +8,9 @@ import DEFAULT_SETTINGS from '../src/assets/settings.json';
 import createSagaMiddleware from 'redux-saga';
 import {rootSaga} from '../src/store/root-saga';
 
-function fromSettings(settings: SettingsModel = DEFAULT_SETTINGS, ...actions: Array<Action>): TestingStore<ApplicationState> {
-    const state = StateGenerator.rootFromSettings(settings, ...actions);
-    return createMockStore<ApplicationState>([])(state);
-}
-
 function fromActions(...actions: Array<Action>): TestingStore<ApplicationState> {
-    return fromSettings(DEFAULT_SETTINGS, ...actions);
+    const state = StateGenerator.rootFromSettings(DEFAULT_SETTINGS, ...actions);
+    return createMockStore<ApplicationState>([])(state);
 }
 
 function withSagaFromSettings(settings: SettingsModel = DEFAULT_SETTINGS, ...actions: Array<Action>): TestingStore<ApplicationState> {
@@ -25,13 +21,7 @@ function withSagaFromSettings(settings: SettingsModel = DEFAULT_SETTINGS, ...act
     return store;
 }
 
-function withSagaFromActions(...actions: Array<Action>): TestingStore<ApplicationState> {
-    return withSagaFromSettings(DEFAULT_SETTINGS, ...actions);
-}
-
 export const TestingStoreFactory = {
     fromActions,
-    fromSettings,
-    withSagaFromSettings,
-    withSagaFromActions
+    withSagaFromSettings
 };
